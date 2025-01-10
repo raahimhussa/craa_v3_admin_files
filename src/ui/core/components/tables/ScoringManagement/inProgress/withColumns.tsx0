@@ -1,0 +1,394 @@
+import { useMemo } from 'react';
+import compose from '@shopify/react-compose';
+import { withFind } from '@hocs';
+
+import IRole from 'src/models/role/role.interface'
+import IUser from 'src/models/user/user.interface'
+
+import {
+  AdminColumn,
+  CellType,
+  Type,
+} from 'src/ui/core/components/DataGrid/DataGrid'
+import {
+  AdminLogScreen,
+  AssessmentStatus,
+  SimulationType,
+  UserSimulationStatus,
+} from 'src/utils/status'
+import { AppBar, IconButton, Modal, Toolbar } from '@mui/material'
+import { Badge, Circle } from '@mui/icons-material'
+import { Button, Typography } from 'src/ui/core/components'
+import { green, yellow } from '@mui/material/colors'
+import { observer, useLocalObservable } from 'mobx-react'
+
+import { AdminLogManager } from 'src/classes/adminLogManager'
+import Assessment from 'src/models/assessment'
+import { AssessmentScorerType } from 'src/stores/ui/pages/assessment'
+import Box from '@mui/material/Box'
+import { CellProps } from 'react-table'
+// import { EnhancedAssessment } from 'src/ui/pages/admin/Reporting/ReportingView'
+import { IAssessment } from 'src/models/assessment/assessment.interface'
+import PreviewButton from './PreviewButton/PreviewButton'
+import PublishButton from './PublishButton/PublishButton'
+import RetractButton from './RetractButton/RetractButton'
+import ScorerSelect from './ScorerSelect'
+import StatusSelect from './StatusSelect'
+import UserSimulation from 'src/models/userSimulation'
+import UserSimulationRepository from 'src/repos/v2/userSimulation'
+import { WrappingFunction } from '@shopify/react-compose'
+import _ from 'lodash'
+import axios from 'axios'
+import moment from 'moment'
+import palette from 'src/theme/palette'
+import { toJS } from 'mobx'
+import { useEffect } from 'react'
+import { useRootStore } from 'src/stores'
+import { useSnackbar } from 'notistack'
+
+const withColumns: WrappingFunction = (WrappedComponent) =>
+  observer((props) => {
+    const {
+      uiState: { modal },
+      scoringManagementStore,
+    } = useRootStore()
+
+    const {
+      scoringManagementMutate: mutate,
+    }: { scoringManagementMutate: any } = props
+
+    useEffect(() => {
+      scoringManagementStore.notPublishedTableMutate =
+        props.scoringManagementMutate
+      scoringManagementStore.notPublishedTableCountMutate = props.countMutate
+    }, [props.scoringManagementMutate, props.countMutate])
+
+    const publishMutate = async () => {
+      mutate && (await mutate())
+      scoringManagementStore.publishedTableMutate &&
+        (await scoringManagementStore.publishedTableMutate())
+      scoringManagementStore.publishedTableCountMutate &&
+        (await scoringManagementStore.publishedTableCountMutate())
+    }
+
+    const userOptions = props.users
+      ?.filter((user: IUser) => {
+        const role = props.roles.find((role: IRole) => role._id === user.roleId)
+        return role?.priority === 2 || role?.priority === 7
+      })
+      .map((user: IUser) => {
+        const role = props.roles.find((role: IRole) => role._id === user.roleId)
+
+        return {
+          text:
+            role?.title === 'SuperAdmin'
+              ? 'superAdmin'
+              : `${user.profile?.firstName} ${user.profile?.lastName}`,
+          value: user._id,
+        }
+      });
+
+    const columns: Array<AdminColumn> = [
+      {
+        Header: 'Due Date',
+        width: 100,
+        Cell: (cellProps: any) => {
+          const startDate = new Date(cellProps.row.original.createdAt) as Date
+          const deadline = cellProps.row.original.userSimulation
+            .deadline as number
+          const dueDate = new Date(
+            new Date().setDate(startDate.getDate() + deadline)
+          )
+
+          return <Box>{moment(dueDate).format('MM-DD-YYYY')}</Box>
+        },
+      },
+      {
+        Header: 'Group Due Date',
+        width: 100,
+        Cell: (cellProps: any) => {
+          const relatedAssessments = cellProps.row.original
+            .relatedAssessments as (Assessment & {
+            userSimulation: UserSimulation
+          })[]
+          const userBaseline = relatedAssessments?.find(
+            (_assessment) =>
+              _assessment.userSimulation.simulationType ===
+              SimulationType.Baseline
+          )?.userSimulation
+          if (
+            !userBaseline ||
+            userBaseline.status !== UserSimulationStatus.Distributed
+          )
+            return <Box />
+          const notPassedDomains =
+            userBaseline.results?.scoreByMainDomain.filter(
+              (_scoreByMainDomain) => !_scoreByMainDomain.pass
+            )
+          const startDate = new Date(cellProps.row.original.createdAt) as Date
+          const deadline = cellProps.row.original.userSimulation
+            .deadline as number
+          const dueDate = new Date(
+            new Date().setDate(startDate.getDate() + deadline)
+          )
+          if (notPassedDomains && notPassedDomains.length === 0) {
+            return <Box>{moment(dueDate).format('MM-DD-YYYY')}</Box>
+          } else if (
+            notPassedDomains &&
+            notPassedDomains.length > relatedAssessments.length - 1
+          ) {
+            return <Box />
+          }
+          let lastDueDate = dueDate
+          relatedAssessments.forEach((_relatedAssessment) => {
+            const _startDate = new Date(_relatedAssessment.createdAt)
+            const _deadline = _relatedAssessment.userSimulation.deadline
+            const _dueDate = new Date(
+              new Date().setDate(_startDate.getDate() + _deadline)
+            )
+            if (_dueDate > lastDueDate) {
+              lastDueDate = _dueDate
+            }
+          })
+
+          return <Box>{moment(lastDueDate).format('MM-DD-YYYY')}</Box>
+        },
+      },
+      {
+        Header: 'Simulation',
+        accessor: 'userSimulation.simulation.name',
+        type: Type.String,
+        width: 100,
+      },
+      {
+        Header: 'First Name',
+        accessor: 'userSimulation.user.profile.firstName',
+        type: Type.String,
+        width: 100,
+      },
+      {
+        Header: 'Last Name',
+        accessor: 'userSimulation.user.profile.lastName',
+        type: Type.String,
+        width: 100,
+      },
+      {
+        Header: 'Scorer1',
+        accessor: 'firstScorer._id',
+        type: Type.String,
+        width: 200,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <ScorerSelect
+            {...cellProps}
+            path="firstScorer._id"
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        id: 'statusScorer1',
+        Header: 'Status',
+        accessor: 'status',
+        type: Type.String,
+        width: 700,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <StatusSelect
+            {...cellProps}
+            type={AssessmentScorerType.FirstScorer}
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        Header: 'Scorer2',
+        accessor: 'secondScorer._id',
+        type: Type.String,
+        width: 100,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <ScorerSelect
+            {...cellProps}
+            path="secondScorer._id"
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        id: 'statusScorer2',
+        Header: 'Status',
+        // accessor: 'secondScorerId',
+        type: Type.String,
+        width: 300,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <StatusSelect
+            {...cellProps}
+            type={AssessmentScorerType.SecondScorer}
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        Header: 'Adjudicator',
+        accessor: 'adjudicator',
+        type: Type.String,
+        width: 100,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <ScorerSelect
+            {...cellProps}
+            path="adjudicator._id"
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        id: 'statusAdjudicator',
+        Header: 'Status',
+        // accessor: 'secondScorerId',
+        type: Type.String,
+        width: 300,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => (
+          <StatusSelect
+            {...cellProps}
+            type={AssessmentScorerType.Adjudicator}
+            mutate={mutate}
+            userSimulation={cellProps.row.original.userSimulation}
+          />
+        ),
+      },
+      {
+        Header: 'Publish',
+        type: Type.String,
+        width: 200,
+        Cell: (
+          cellProps: CellProps<Assessment & { userSimulation: UserSimulation }>
+        ) => {
+          const {
+            row: { original: assessment },
+          } = cellProps
+          return (
+            <PublishButton
+              assessment={assessment}
+              userSimulation={assessment.userSimulation}
+              mutate={publishMutate}
+            />
+          )
+        },
+      },
+      {
+        Header: 'Preview',
+        type: Type.String,
+        width: 200,
+        Cell: observer(
+          (
+            cellProps: CellProps<
+              Assessment & { userSimulation: UserSimulation }
+            >
+          ) => {
+            const {
+              row: { original: assessment },
+            } = cellProps
+            return (
+              <PreviewButton
+                assessment={assessment}
+                userSimulation={assessment.userSimulation}
+                mutate={mutate}
+              />
+            )
+          }
+        ),
+      },
+      {
+        Header: 'Expedited',
+        accessor: 'isExpedited',
+        type: Type.String,
+        minWidth: 400,
+        Cell: (cellProps: any) => {
+          const adminLogManager = AdminLogManager.getInstance()
+          const assessment = cellProps.row.original
+          const onClick = async () => {
+            const filter = {
+              _id: assessment._id,
+            }
+            const update = {
+              isExpedited: !assessment.isExpedited,
+            }
+            await axios.patch('/v2/assessments', {
+              filter,
+              update,
+            })
+            await adminLogManager?.createExpediteSimulationLog({
+              screen: AdminLogScreen.ScoringManagement,
+              target: {
+                type: 'assessments',
+                _id: assessment._id,
+                message: 'expedite',
+              },
+            })
+            mutate && (await mutate())
+          }
+          return (
+            <Box sx={{ width: '130px' }}>
+              {true ? (
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: assessment.isExpedited
+                      ? palette.light.button.red
+                      : palette.light.button.point,
+                    width: '100px',
+                  }}
+                  onClick={onClick}
+                >
+                  {assessment.isExpedited ? 'Expedited' : 'Expedite'}
+                </Button>
+              ) : (
+                <Box>
+                  <Circle htmlColor="green" />
+                </Box>
+              )}
+            </Box>
+          )
+        },
+      },
+    ]
+
+    const meta = {
+      columns,
+    }
+
+    return <WrappedComponent {...props} {...meta} userOptions={userOptions} />
+  })
+
+  const getUsersFilter = (props: { roles: IRole[] }) => {
+    const scorerRoles = ['SimScorer', 'Admin']
+    return {
+      roleId: {
+        $in: props.roles
+          .filter((role) => scorerRoles.includes(role.title))
+          .map((role) => role._id),
+      },
+    }
+  }
+
+export default compose<any>(
+  withFind({
+    collectionName: 'users',
+    getFilter: getUsersFilter,
+  })
+)(withColumns);

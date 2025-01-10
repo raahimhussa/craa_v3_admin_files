@@ -1,0 +1,31 @@
+import React, { createContext, useContext, useState } from 'react';
+
+interface DataGridContextValue {
+    selectedRows: any[]; // Replace 'any' with the specific type if needed
+    setSelectedRows: (rows: any[]) => void; // Replace 'any' with the specific type
+}
+
+const defaultContextValue: DataGridContextValue = {
+    selectedRows: [],
+    setSelectedRows: () => {},
+};  
+
+const DataGridContext = createContext<DataGridContextValue>(defaultContextValue);
+
+export const DataGridProvider: React.FC = ({ children }) => {
+    const [selectedRows, setSelectedRows] = useState<any[]>([]); // Replace 'any' with the specific type
+  
+    const store: DataGridContextValue = {
+      selectedRows,
+      setSelectedRows,
+    };
+  
+    return (
+      <DataGridContext.Provider value={store}>
+        {children}
+      </DataGridContext.Provider>
+    );
+};
+  
+export const useDataGridStore = (): DataGridContextValue => useContext(DataGridContext);
+

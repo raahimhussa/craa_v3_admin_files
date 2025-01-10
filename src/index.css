@@ -1,0 +1,1095 @@
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-icons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
+
+:root {
+  /* --header-color: #264c56; */
+  /* --header-color: #193433; */
+  --header-color: linear-gradient(135deg, #2c5c68, #0a304d);
+  --search-border-color: rgb(170, 183, 184);
+  --main-font-color: rgb(84, 91, 100);
+  --blue-color: rgb(0, 115, 187);
+  --green-color: rgb(29, 129, 2);
+  --red-color: rgb(209, 50, 18);
+  --yellow-color: rgb(255, 153, 0);
+  --orange-color: rgb(236, 114, 17);
+  --main-color: #58a7c9;
+  --dark-color: #396d82;
+  --medium-color: #8eb4c4;
+  --point-color: #79b1b3;
+  --light-color: #d3e1e6;
+  --thead-bg: rgb(250, 250, 250);
+  --body-bg: rgb(242, 243, 243);
+  --table-border: rgb(243, 237, 237);
+  --dark-font-color: rgb(22, 25, 31);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--body-bg) !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.swal2-container {
+  z-index: 2000 !important;
+}
+
+input:-internal-autofill-selected {
+  background-color: transparent !important;
+}
+
+#root {
+  overflow-y: hidden;
+}
+#docContainer {
+  height: 100% !important;
+}
+#container_editor_viewerContainer {
+  height: 100% !important;
+}
+
+#variable-menu fieldset {
+  border-radius: 5px !important;
+  border-color: #f2f2f2 !important;
+}
+
+.zingchart a {
+  display: none !important;
+}
+
+.whiteSelect fieldset {
+  background-color: white !important;
+  border-radius: 8px !important;
+  z-index: -1;
+}
+.whiteSelect svg {
+  color: var(--dark-color) !important;
+  z-index: 2;
+}
+
+.flag-icon {
+  border-radius: 8px;
+  width: 20px !important;
+}
+
+.MuiTooltip-tooltip {
+  background-color: rgb(38, 38, 38, 0.9) !important;
+  font-size: 11.5px !important;
+}
+
+/* document builder */
+@media (min-width: 1700px) {
+  .docPage {
+    zoom: 0.4;
+    -moz-transform: scale(3);
+    -moz-transform-origin: 0 0;
+  }
+  .docPreview {
+    zoom: 0.8;
+    -moz-transform: scale(3);
+    -moz-transform-origin: 0 0;
+  }
+  .flagStack {
+    margin-top: 15px !important;
+  }
+}
+
+@media (max-width: 1700px) {
+  .docPage {
+    zoom: 0.35;
+    -moz-transform: scale(3);
+    -moz-transform-origin: 0 0;
+  }
+  .docPreview {
+    zoom: 0.8;
+    -moz-transform: scale(3);
+    -moz-transform-origin: 0 0;
+  }
+  .flagStack {
+    margin-top: 13px !important;
+  }
+}
+
+[id='25'] .e-rte-content > .e-content {
+  transform: scale(0.25) !important;
+  transform-origin: top;
+}
+[id='50'] .e-rte-content > .e-content {
+  transform: scale(0.5);
+  transform-origin: top;
+}
+[id='75'] .e-rte-content > .e-content {
+  transform: scale(0.75);
+  transform-origin: top;
+}
+[id='100'] .e-rte-content > .e-content {
+  transform: scale(1);
+  transform-origin: top;
+}
+[id='25'] .tox-edit-area iframe {
+  transform: scale(0.25) !important;
+  transform-origin: top;
+}
+[id='50'] .tox-edit-area iframe {
+  transform: scale(0.5);
+  transform-origin: top;
+}
+[id='75'] .tox-edit-area iframe {
+  transform: scale(0.75);
+  transform-origin: top;
+}
+[id='100'].tox-edit-area iframe {
+  transform: scale(1);
+  transform-origin: top;
+}
+
+.e-rte-content {
+  background-color: #cccccc !important;
+  height: calc(100vh - 180px) !important;
+  overflow-y: scroll !important;
+  padding: 10px 0 !important;
+}
+.tox-edit-area {
+  background-color: #cccccc !important;
+  height: calc(100vh - 200) !important;
+  overflow-y: scroll !important;
+  padding: 10px 0 !important;
+}
+
+.tox-edit-area {
+  justify-content: center;
+}
+
+.e-content,
+.tox-edit-area iframe {
+  background-color: white !important;
+  width: 800px !important;
+  min-width: 700px !important;
+  height: auto !important;
+  aspect-ratio: 1/1.4 !important;
+  margin: 0 auto !important;
+  overflow: hidden !important;
+  margin-bottom: 10px;
+}
+
+.document-editor {
+  border: 1px solid var(--ck-color-base-border);
+  border-radius: var(--ck-border-radius);
+
+  /* Set vertical boundaries for the document editor. */
+  max-height: calc(100% - 60px);
+  height: calc(100% - 60px);
+
+  /* This element is a flex container for easier rendering. */
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.document-editor__toolbar {
+  /* Make sure the toolbar container is always above the editable. */
+  z-index: 1;
+
+  /* Create the illusion of the toolbar floating over the editable. */
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.2);
+
+  /* Use the CKEditor CSS variables to keep the UI consistent. */
+  border-bottom: 1px solid var(--ck-color-toolbar-border);
+}
+
+/* Adjust the look of the toolbar inside the container. */
+.document-editor__toolbar .ck-toolbar {
+  border: 0;
+  border-radius: 0;
+}
+/* Make the editable container look like the inside of a native word processor application. */
+.document-editor__editable-container {
+  padding: calc(2 * var(--ck-spacing-large));
+  background: var(--ck-color-base-foreground);
+
+  /* Make it possible to scroll the "page" of the edited content. */
+  overflow-y: scroll;
+}
+
+.document-editor__editable-container .ck-editor__editable {
+  /* Set the dimensions of the "page". */
+  width: 15.8cm;
+  min-height: 21cm;
+
+  /* Keep the "page" off the boundaries of the container. */
+  padding: 1cm 2cm 2cm;
+
+  border: 1px hsl(0, 0%, 82.7%) solid;
+  border-radius: var(--ck-border-radius);
+  background: white;
+
+  /* The "page" should cast a slight shadow (3D illusion). */
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1);
+
+  /* Center the "page". */
+  margin: 0 auto;
+}
+/* Set the default font for the "page" of the content. */
+.document-editor .ck-content,
+.document-editor .ck-heading-dropdown .ck-list .ck-button__label {
+  font: 16px/1.6 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+/* Adjust the headings dropdown to host some larger heading styles. */
+.document-editor .ck-heading-dropdown .ck-list .ck-button__label {
+  line-height: calc(
+    1.7 * var(--ck-line-height-base) * var(--ck-font-size-base)
+  );
+  min-width: 6em;
+}
+
+/* Scale down all heading previews because they are way too big to be presented in the UI.
+Preserve the relative scale, though. */
+.document-editor
+  .ck-heading-dropdown
+  .ck-list
+  .ck-button:not(.ck-heading_paragraph)
+  .ck-button__label {
+  transform: scale(0.8);
+  transform-origin: left;
+}
+
+/* Set the styles for "Heading 1". */
+.document-editor .ck-content h2,
+.document-editor .ck-heading-dropdown .ck-heading_heading1 .ck-button__label {
+  font-size: 2.18em;
+  font-weight: normal;
+}
+
+.document-editor .ck-content h2 {
+  line-height: 1.37em;
+  padding-top: 0.342em;
+  margin-bottom: 0.142em;
+}
+
+/* Set the styles for "Heading 2". */
+.document-editor .ck-content h3,
+.document-editor .ck-heading-dropdown .ck-heading_heading2 .ck-button__label {
+  font-size: 1.75em;
+  font-weight: normal;
+  color: hsl(203, 100%, 50%);
+}
+
+.document-editor
+  .ck-heading-dropdown
+  .ck-heading_heading2.ck-on
+  .ck-button__label {
+  color: var(--ck-color-list-button-on-text);
+}
+
+/* Set the styles for "Heading 2". */
+.document-editor .ck-content h3 {
+  line-height: 1.86em;
+  padding-top: 0.171em;
+  margin-bottom: 0.357em;
+}
+
+/* Set the styles for "Heading 3". */
+.document-editor .ck-content h4,
+.document-editor .ck-heading-dropdown .ck-heading_heading3 .ck-button__label {
+  font-size: 1.31em;
+  font-weight: bold;
+}
+
+.document-editor .ck-content h4 {
+  line-height: 1.24em;
+  padding-top: 0.286em;
+  margin-bottom: 0.952em;
+}
+
+/* Set the styles for "Paragraph". */
+.document-editor .ck-content p {
+  font-size: 1em;
+  line-height: 1.63em;
+  padding-top: 0.5em;
+  margin-bottom: 1.13em;
+}
+/* Make the block quoted text serif with some additional spacing. */
+.document-editor .ck-content blockquote {
+  font-family: Georgia, serif;
+  margin-left: calc(2 * var(--ck-spacing-large));
+  margin-right: calc(2 * var(--ck-spacing-large));
+}
+
+.MuiTableCell-root .small-select {
+  height: 20px !important;
+}
+
+.small-check .MuiFormControlLabel-root {
+  margin-right: 0 !important;
+}
+.small-check .MuiTypography-root {
+  font-size: 0.8rem !important;
+}
+
+.small-check .MuiSvgIcon-root {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.fullwidth .MuiAccordionSummary-content {
+  width: 100%;
+}
+
+.select {
+  min-height: 45px;
+  height: 45px !important;
+}
+
+.select fieldset {
+  border-radius: 8px !important;
+  border-color: #e6e6e6 !important;
+}
+
+/* small table */
+.smallTable .MuiTableCell-root {
+  line-height: 2.5 !important;
+}
+
+/* docSelectTable */
+.docSelectTable .MuiTableCell-root {
+  line-height: 3.5 !important;
+  text-align: center;
+}
+
+.link {
+  text-decoration: none !important;
+}
+
+/* datapicker */
+.react-datepicker-wrapper {
+  width: 120px !important;
+  margin-left: 0.5rem;
+  height: 37.5px;
+}
+.react-datepicker-wrapper .react-datepicker__input-container {
+  height: 100%;
+}
+.react-datepicker-wrapper input {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.selectMargin .MuiFormLabel-root {
+  margin-top: -6px;
+}
+.selectMargin .MuiInputLabel-shrink {
+  margin-top: 2px !important;
+  background-color: white;
+}
+
+.red {
+  color: red !important;
+}
+
+.css-1y6bmgx {
+  display: none;
+}
+
+.apexcharts-marker {
+  cursor: pointer;
+}
+
+.select-note {
+  stroke: #66ff66;
+  stroke-width: 4px;
+  r: 7;
+}
+
+.pageSelect {
+  height: 40px;
+}
+
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon,
+.apexcharts-zoom-icon,
+.apexcharts-pan-icon,
+.apexcharts-menu-icon {
+  display: none;
+}
+
+.title fieldset {
+  border-color: #e6e6e6 !important;
+  border-radius: 8px !important;
+}
+
+/* app bar */
+.MuiAppBar-root {
+  height: 45px;
+  /* background-color: var(--header-color) !important; */
+  /* background-color: #377485 !important; */
+  background: linear-gradient(135deg, #2c5c68, #0a304d) !important;
+  border-bottom: 1px solid #e3e5e8;
+}
+
+.MuiAppBar-positionFixed {
+  padding: 0 !important;
+  /* background-image: none !important; */
+}
+
+.blinkRow {
+  /* animation: blink 1s 5; */
+  background-color: var(--blue-color);
+}
+
+/* @keyframes blink {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: var(--blue-color);
+  }
+  100% {
+    background-color: white;
+  }
+} */
+
+.title .MuiInputBase-root {
+  height: 45px;
+}
+
+.versionSelect fieldset {
+  border-radius: 7px !important;
+  border-color: #e6e6e6 !important;
+}
+
+/* table */
+
+.MuiTableContainer-root {
+  border-radius: 2px !important;
+  box-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.3),
+    1px 1px 1px 0 rgba(0, 28, 36, 0.15), -1px 1px 1px 0 rgba(0, 28, 36, 0.15),
+    0 1px 1px 0 rgba(0, 28, 36, 0.3), 1px 1px 1px 0 rgba(0, 28, 36, 0.15),
+    -1px 1px 1px 0 rgba(0, 28, 36, 0.15) !important;
+  border-top: 1px solid rgb(234, 237, 237);
+}
+
+.MuiTableCell-root {
+  padding: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 0 !important;
+}
+.logtable .MuiTableCell-root {
+  padding: 5px !important;
+  padding-bottom: 0 !important;
+  line-height: 3.5 !important;
+  font-size: 14px !important;
+  padding-left: 10px !important;
+}
+
+.logtable .noPadding {
+  padding-left: 0px !important;
+}
+
+.MuiTableCell-head {
+  background-color: var(--thead-bg) !important;
+  font-weight: 700 !important;
+  color: var(--main-font-color) !important;
+  font-size: 13.5px !important;
+  border-bottom: 1px solid var(--table-border) !important;
+  border-top: 1px solid var(--table-border) !important;
+}
+
+.MuiTableCell-head .title {
+  width: 100%;
+  padding: 0px 0px 0px 8px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  margin: 13px 0;
+  border-right: 1px solid var(--main-font-color);
+  /* display: inline; */
+}
+
+.MuiTableCell-head:first-child .title {
+  border-right-color: var(--table-border) !important;
+}
+
+.MuiTableCell-head:last-child .title {
+  border: none !important;
+}
+
+.MuiTableRow-root {
+  background-color: white !important;
+}
+/* tbody:not(.logtable)  */
+.paginationTable .MuiTableRow-root:nth-child(even) {
+  background-color: rgb(242, 242, 242, 0.2) !important;
+}
+
+.MuiTableCell-body {
+  color: rgb(22, 25, 31) !important;
+  font-size: 13px !important;
+  border-bottom: 1px solid var(--table-border) !important;
+  padding-left: 16px !important;
+}
+
+button {
+  border-radius: 4px !important;
+  height: 28px;
+  box-shadow: none !important;
+  font-size: 13px !important;
+}
+
+.MuiChip-deleteIcon {
+  font-size: 20px !important;
+}
+
+/* paper */
+
+.paper-grid {
+  border-radius: 2px !important;
+  padding: 1.2rem;
+  box-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.3),
+    1px 1px 1px 0 rgba(0, 28, 36, 0.15), -1px 1px 1px 0 rgba(0, 28, 36, 0.15),
+    0 1px 1px 0 rgba(0, 28, 36, 0.3), 1px 1px 1px 0 rgba(0, 28, 36, 0.15),
+    -1px 1px 1px 0 rgba(0, 28, 36, 0.15) !important;
+  border-top: 1px solid rgb(234, 237, 237);
+  background-color: white;
+}
+
+.paper-grid .MuiOutlinedInput-root {
+  height: 37.13px;
+}
+
+.multiline .MuiOutlinedInput-root {
+  height: 100%;
+}
+
+/* button */
+.MuiButton-outlined {
+  border-color: var(--main-font-color) !important;
+  color: var(--main-font-color) !important;
+}
+
+.versionSelect .MuiSelect-select {
+  padding-right: 15px !important;
+}
+
+/* .MuiTooltip-popper {
+  background-color: '#8c8c8c';
+} */
+
+/* input */
+.buAutocomplete .MuiOutlinedInput-root {
+  height: 30px;
+}
+.MuiOutlinedInput-root {
+  /* height: 30px; */
+  padding: 0 !important;
+  font-size: 14px !important;
+  padding-left: 5px !important;
+  padding-right: 13px !important;
+}
+
+.bookmark-input {
+  width: 100%;
+  height: 100%;
+}
+
+.MuiTableCell-root .bookmark-input .MuiOutlinedInput-root {
+  height: 100% !important;
+}
+
+.bookmark-input textarea {
+  padding: 0.5rem;
+}
+.select .MuiInputLabel-root {
+  margin-top: -8px;
+}
+.select .MuiInputLabel-shrink {
+  margin-top: 0px;
+}
+
+.bookmarkTable .MuiTableCell-body {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.MuiTableCell-root .MuiOutlinedInput-root {
+  height: 30px !important;
+}
+
+.MuiTableCell-root .small-select {
+  height: 20px !important;
+  margin-bottom: 0.1rem !important;
+  margin-top: 0.1rem !important;
+}
+
+.MuiTableCell-root .MuiOutlinedInput-root input {
+  padding: 0 !important;
+}
+
+/* select list */
+.MuiList-root {
+  max-height: 500px !important;
+}
+.MuiList-root li {
+  height: 25px;
+  font-size: 0.8rem;
+}
+.MuiList-root li span {
+  font-size: 0.8rem;
+  padding: 0;
+}
+.MuiList-root li .MuiCheckbox-root svg {
+  width: 20px;
+  margin-right: 0.5rem;
+}
+
+label.Mui-focused {
+  color: var(--blue-color) !important;
+  margin-top: 0 !important;
+}
+
+.datepicker input {
+  width: 50px !important;
+}
+
+.Mui-focused fieldset {
+  border-width: 2px !important;
+  border-color: var(--blue-color) !important;
+}
+
+.MuiInputLabel-root {
+  color: var(--dark-font-color) !important;
+  font-size: 14px !important;
+  padding-left: 3px !important;
+  font-weight: 600 !important;
+}
+
+.MuiFormControl-root-MuiTextField-root {
+  height: 50px !important;
+}
+
+fieldset {
+  border: 1.5px solid var(--search-border-color) !important;
+  border-radius: 2px !important;
+}
+
+/* scoring table */
+.scoring_table .MuiTableCell-root {
+  line-height: 2.3 !important;
+  text-align: center;
+  font-size: 12.5px;
+  border-right: 1px solid var(--table-border) !important;
+}
+
+.scoring_table .MuiTableCell-root:last-child {
+  border-right: none;
+}
+
+.scoring_table .MuiTableCell-body {
+  padding-left: 0 !important;
+}
+
+/* ----------------------- */
+
+/* preview table */
+.preview_table .MuiTableCell-root {
+  line-height: 1.2 !important;
+  text-align: center !important;
+  font-size: 12.5px !important;
+  border-right: 1px solid var(--table-border) !important;
+  padding: 0.7rem !important;
+}
+
+.preview_table .MuiTableCell-root:last-child {
+  border-right: none !important;
+}
+
+.preview_table .no-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.preview_table .title {
+  font-weight: 700 !important;
+  width: 40% !important;
+}
+
+.preview_card {
+  border-radius: 4px !important;
+  border: 1px solid var(--table-border);
+  box-shadow: 0 0 2px 0 rgb(145 158 171 / 20%),
+    0 12px 24px -4px rgb(145 158 171 / 12%);
+}
+
+/* ------ */
+
+.player {
+  width: 640px;
+  height: 403px;
+  position: relative;
+  margin: 50px auto;
+}
+
+.video {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 43px;
+}
+
+.control {
+  float: left;
+  padding: 0 10px;
+}
+
+.toolbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 13px 0 13px;
+}
+
+.control a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.progress-container {
+  position: absolute;
+  left: 43px;
+  right: 79px;
+  width: auto;
+}
+
+.volume,
+.fullscreen {
+  float: right;
+}
+
+.MuiBox-root:has(.logModal) {
+  height: 100vh;
+}
+
+.MuiDivider-root {
+  font-size: 14px;
+}
+
+.MuiDivider-root::before {
+  width: 2% !important;
+}
+.MuiDivider-root::after {
+  width: 98% !important;
+}
+
+.pagination {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pagination .previous {
+  margin-right: 2rem;
+}
+.pagination .next {
+  margin-left: 2rem;
+}
+
+.pagination a {
+  padding: 0.1rem 0.4rem;
+  border-radius: 5px;
+  /* border: 1px solid var(--dark-color); */
+  color: var(--dark-color);
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 0.5rem;
+}
+.pagination a:hover {
+  background-color: var(--light-color);
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: #fff;
+  background: var(--dark-color);
+  padding: 0.1rem 0.4rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+.pagination__link--active a:hover {
+  background: var(--dark-color);
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+  font-weight: 600;
+  font-size: 14px;
+  /* border: 1px solid rgb(198, 197, 202); */
+}
+
+/* preview table */
+.preview_table .MuiTableCell-root {
+  text-align: center;
+  font-size: 12.5px;
+  border-right: 1px solid var(--table-border);
+}
+
+.preview_table .MuiTableCell-root:last-child {
+  border-right: none;
+}
+
+.preview_table .title {
+  font-weight: 700;
+  width: 40%;
+}
+
+.preview_card {
+  border-radius: 4px !important;
+  border: 1px solid var(--table-border);
+}
+
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.react-pdf__Page__textContent {
+  display: none;
+}
+
+.react-pdf__Page__annotations {
+  display: none;
+}
+
+.datadump-head-cell {
+  max-width: 128px !important;
+  /* white-space: normal !important; */
+  line-height: 24px !important;
+  padding: 0px 18px !important;
+  /* text-align: center !important; */
+  height: 48px;
+  border-right: 1px solid rgb(230, 230, 230);
+}
+
+.datadump-body-cell {
+  max-width: 128px !important;
+  /* white-space: normal !important; */
+  line-height: 24px !important;
+  padding: 0px 18px !important;
+  height: 36px;
+  border-right: 1px solid rgb(230, 230, 230);
+  /* text-align: center !important; */
+}
+
+.preview-head-cell {
+  height: 48px !important;
+  line-height: 18px !important;
+  padding: 0px 18px !important;
+  border-right: 1px solid rgb(230, 230, 230);
+}
+
+.preview-body-cell {
+  max-width: 128px !important;
+  line-height: 24px !important;
+  padding: 0px 18px !important;
+  height: 36px;
+  border-right: 1px solid rgb(230, 230, 230);
+}
+
+.usercard-head-cell {
+  height: 48px;
+  line-height: 15px !important;
+  padding: 0px 5px !important;
+  border-right: 1px solid rgb(230, 230, 230);
+  text-align: center !important;
+}
+
+.usercard-body-cell {
+  text-align: center !important;
+  height: 36px;
+  line-height: 15px !important;
+  padding: 0px 5px !important;
+  border-right: 1px solid rgb(230, 230, 230);
+}
+
+.usercard-body-cell button {
+  line-height: 0.9;
+  height: 33px !important;
+  font-size: 0.75rem;
+  padding: 0 !important;
+}
+
+.MuiToolbar-root {
+  min-height: 48px !important;
+}
+
+@media (min-width: 1200px) {
+  .css-wo7aj4 {
+    padding-top: 50px !important;
+    padding-bottom: 0 !important;
+  }
+  .MuiAppBar-root {
+    height: 45px !important;
+  }
+
+  .MuiToolbar-root {
+    padding-left: 15px !important;
+  }
+}
+
+.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-8fy52g-MuiAutocomplete-root
+  .MuiOutlinedInput-root {
+  padding-right: 45px !important;
+}
+
+.autocomplete .MuiAutocomplete-tag {
+  max-width: calc(100% - 45px) !important;
+}
+
+/* chart */
+.apexcharts-xaxis-label {
+  word-wrap: break-word;
+  max-width: 50px;
+}
+
+.tooltip {
+  z-index: 100;
+}
+.tooltip p {
+  font-size: 12px;
+  margin-bottom: 0.3rem;
+  color: white;
+  font-weight: 500;
+}
+
+.tooltip span {
+  color: #ffcc00;
+  font-weight: 600;
+}
+
+.tooltip::before {
+  border-top: 0px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #484848;
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+}
+
+/* sortable tree */
+.rst__rowContents {
+  background-color: transparent !important;
+}
+.rst__rowContentsDragDisabled {
+  background-color: transparent !important;
+}
+.rst__row .activated {
+  background-color: #235360 !important;
+}
+.rst__row .inactivated {
+  background-color: #235360 !important;
+}
+
+/* user status management filter */
+#user-status-management-select {
+  padding: 4px 8px 4px 0px;
+  font-size: 12px;
+}
+
+.w-36 {
+  width: 144px !important;
+}
+
+.h-12 {
+  height: 48px !important;
+}
+
+.whitespace-normal {
+  white-space: normal !important;
+}
+
+.lineHeight-18 {
+  line-height: 18px !important;
+}
+
+/* rst */
+.rst__node {
+  height: 48px !important;
+}
+
+.rst__row {
+  height: 40px !important;
+}
+
+.rst__rowWrapper {
+  padding: 4px 0px 4px 0px !important;
+}
+
+.rst__lineChildren::after {
+  height: 4px !important;
+}
+
+.rst__rowContents {
+  height: 40px !important;
+}
+
+/* react-datasheet-grid */
+.dsg-container {
+  height: calc(100vh - 120px) !important;
+}
+
+.dsg-cell-error {
+  background-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+.dsg-cell-warning {
+  background-color: rgba(255, 255, 0, 0.5) !important;
+}
+
+.dsg-delete-button {
+  width: 36px;
+  cursor: pointer;
+  border: 0px;
+  background-color: white;
+}
+
+.dsg-delete-button:hover {
+  background-color: bisque;
+}
+
+/* scoring table */
+.table-row-warning {
+  background-color: #fff429 !important;
+}
+
+.table-row-error {
+  /* background-color: #fff429 !important; */
+}
+
+.table-row-success {
+  background-color: #d3ffb1 !important;
+}
