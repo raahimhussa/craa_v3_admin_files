@@ -50,6 +50,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    include: ['@mui/material', '@mui/x-date-pickers'],
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
